@@ -1,0 +1,33 @@
+specVersion: 0.0.2
+schema:
+  file: schema.graphql
+dataSources:
+  - kind: ethereum
+    name: Contract
+    network: mainnet
+    source:
+      address: "0xe8218cACb0a5421BC6409e498d9f8CC8869945ea"
+      abi: Contract
+      startBlock: 13665420
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - NewReport
+        - ReportingLockChanged
+        - TimeBasedRewardsChanged
+        - TipAdded
+      abis:
+        - name: Contract
+          file: Contract/abis/Contract.json
+      eventHandlers:
+        - event: NewReport(bytes32,uint256,bytes,uint256,uint256,bytes,address)
+          handler: handleNewReport
+        - event: ReportingLockChanged(uint256)
+          handler: handleReportingLockChanged
+        - event: TimeBasedRewardsChanged(uint256)
+          handler: handleTimeBasedRewardsChanged
+        - event: TipAdded(indexed address,indexed bytes32,uint256,uint256,bytes)
+          handler: handleTipAdded
+      file: Contract/Contract.wasm
